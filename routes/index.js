@@ -30,6 +30,25 @@ router.post('/home',function(req,res){
        }
 });
 });
+
+router.post('/register',function(req,res){
+    var data={ registered:req.body.registered
+             }
+    events.insert(data,function(err,docs){
+  
+    if(err)
+  {
+    console.log(err);
+  }
+  else
+  {
+    console.log(docs);
+
+  }
+  res.redirect('/all')
+    
+});
+});
 router.post('/addevent',function(req,res){
    
 
@@ -126,7 +145,8 @@ router.get('/', function(req, res, next) {
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'CSR' });
 });
-router.get('/test', function(req, res, next) {
-  res.render('test', { title: 'CSR' });
+router.get('/all', function(req, res, next) {
+        events.find({ }, function(e, events){ 
+         res.render('all', {title:'valid' ,'events' : events});    }); 
 });
 module.exports = router;
